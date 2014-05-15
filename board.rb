@@ -42,12 +42,12 @@ class Board
   end
   
   def transform_kings
-    find_kings.each {|piece| @board[piece.pos] = Pieces.new(piece.board,piece.color,piece.pos,true) }
+    find_kings.each {|piece| @board[piece.pos] = Pieces.new(piece.board, piece.color, piece.pos, true) }
   end
   
   def find_kings
-   black_kings = find_pieces(:b).select{|piece| piece.pos[1] == 7 }
-   red_kings = find_pieces(:r).select{|piece| piece.pos[1] == 0 }
+   black_kings = find_pieces(:b).select { |piece| piece.pos[1] == 7 }
+   red_kings = find_pieces(:r).select{ |piece| piece.pos[1] == 0 }
    black_kings + red_kings
   end
 
@@ -66,7 +66,7 @@ class Board
   end
 
   def find_pieces(color)
-    @board.select { |pos,piece| piece && piece.color == color}.values
+    @board.select { |pos,piece| piece && piece.color == color }.values
   end
 
   def to_s
@@ -94,9 +94,10 @@ class Board
     pos.all? { |coord| coord.between?(0,7) }
   end
   
+ 
   protected
   def set_board
-    rows=[[0,0],[1,1],[0,2],[1,5],[0,6],[1,7]]
+    rows=[[0,0],[1,1], [0,2], [1,5], [0,6], [1,7]]
     rows.each do |row|
       if row[1] > 2
         fill_row(row,:r)
@@ -106,10 +107,10 @@ class Board
     end
   end
   
-  def fill_row(pos,col)
+  def fill_row(pos, col)
     while in_board?(pos)
-      @board[pos] = Pieces.new(self,col,pos)
-      pos =[pos[0]+2,pos[1]]
+      @board[pos] = Pieces.new(self, col, pos)
+      pos =[pos[0]+2, pos[1]]
     end
   end
       

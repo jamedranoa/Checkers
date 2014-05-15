@@ -1,6 +1,6 @@
 class Pieces
   attr_accessor :pos,:color,:position,:deltas,:board, :king
-  def initialize(board,color, position,king = false)
+  def initialize(board, color, position, king = false)
     @board = board
     @color = color
     @pos = position
@@ -15,7 +15,7 @@ class Pieces
   end
   
   def set_deltas_king
-    deltas = [[1,1],[-1,1],[1,-1],[-1,-1]]
+    deltas = [[1,1], [-1,1], [1,-1], [-1,-1]]
   end
   
   def slide_moves
@@ -31,8 +31,8 @@ class Pieces
   def jump_moves
     jumps = []
     @deltas.each do |dx,dy|
-      end_pos = [pos[0]+2*dx,pos[1]+2*dy]
-      nex_pos =[pos[0]+dx,pos[1]+dy]
+      end_pos = [pos[0] + 2*dx, pos[1] + 2*dy]
+      nex_pos =[pos[0] + dx, pos[1] + dy]
       jumps << end_pos if jump_move?(nex_pos,end_pos)
     end
     jumps.compact
@@ -47,7 +47,7 @@ class Pieces
   end
   
   def make_jump(end_pos)
-    nex_pos = [(end_pos[0]-pos[0])/2+pos[0],(end_pos[1]-pos[1])/2+pos[1]]
+    nex_pos = [(end_pos[0] - pos[0]) / 2 + pos[0],(end_pos[1]-pos[1])/2+pos[1]]
     p nex_pos
     @board[pos] = nil
     @board[end_pos] = self
