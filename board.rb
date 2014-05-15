@@ -81,39 +81,30 @@ class Board
   def in_board?(pos)
     pos.all? { |coord| coord.between?(0,7) }
   end
+  
+  protected
+  def set_board
+    rows=[[0,0],[1,1],[0,2],[1,5],[0,6],[1,7]]
+    rows.each do |row|
+      if row[1] > 2
+        fill_row(row,:r)
+        next
+      end
+      fill_row(row,:b)
+    end
+  end
+  
+  def fill_row(pos,col)
+    while in_board?(pos)
+      @board[pos] = Pieces.new(self,col,pos)
+      pos =[pos[0]+2,pos[1]]
+    end
+  end
+      
 
 end
 
 
-b = Board.new
-print b
-b[[0,0]] = Pieces.new(b,:b,[0,0])
-b[[1,1]] = Pieces.new(b,:r,[1,1])
-puts
-print b
-puts
-p b.any_jumps?(:b)
-b.move([[0,0],[2,2]])
-puts
-print b
-b.move([[2,2],[3,3]])
-puts
-print b
-b[[4,4]] = Pieces.new(b,:r,[4,4])
-puts
-print b
-b.move([[4,4],[2,2]])
-puts
+b = Board.new(true)
 print b
 
-b[[2,4]] = Pieces.new(b,:r,[2,4])
-puts
-print b
-b.move([[3,3],[1,5]])
-puts
-print b
-=begin
-b.move([[3,3],[1,5]])
-puts 
-print b
-=end
