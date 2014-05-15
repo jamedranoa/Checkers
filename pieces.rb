@@ -1,10 +1,12 @@
 class Pieces
-  attr_accessor :pos,:color,:position,:deltas
-  def initialize(board,color, position)
+  attr_accessor :pos,:color,:position,:deltas,:board, :king
+  def initialize(board,color, position,king = false)
     @board = board
     @color = color
     @pos = position
     @deltas = set_deltas
+    @deltas = set_deltas_king if king 
+    @king = king
   end
   
   def set_deltas
@@ -12,9 +14,13 @@ class Pieces
     deltas = [[1, s*1], [-1, s*1]] 
   end
   
+  def set_deltas_king
+    deltas = [[1,1],[-1,1],[1,-1],[-1,-1]]
+  end
+  
   def slide_moves
     moves = possible_moves
-    moves.select { |post|  @board.empty?(post) }
+    moves.select { |post|  @board.empty?(post) }.compact
   end
   
   def possible_moves
@@ -56,6 +62,7 @@ class Pieces
   end
   
   def to_s
+    return color == :b ? "♛" : "♕" if king
     color == :b ? "♟" : "♙"
   end
   

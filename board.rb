@@ -28,15 +28,27 @@ class Board
   def move(move)
     start_pos, end_pos = move
     
-    raise InvalideMoveError if !valid_move?(move)
+    raise InvalideMoveError, "Invalid move" if !valid_move?(move)
     piece = @board[start_pos]
     if is_jump?(move)
       piece.make_jump(end_pos)
       raise InvalideMoveError, "Make another Jump" if any_jumps?(piece.color)
+      transform_kings
       return nil
     end
     raise InvalideMoveError, "Make Jump" if any_jumps?(piece.color)
     piece.make_slide(end_pos)
+    transform_kings
+  end
+  
+  def transform_kings
+    find_kings.each {|piece| @board[piece.pos] = Pieces.new(piece.board,piece.color,piece.pos,true) }
+  end
+  
+  def find_kings
+   black_kings = find_pieces(:b).select{|piece| piece.pos[1] == 7 }
+   red_kings = find_pieces(:r).select{|piece| piece.pos[1] == 0 }
+   black_kings + red_kings
   end
 
   def valid_move?(move)
@@ -75,7 +87,7 @@ class Board
     
     
   def over?
-    find_pieces?(:b).empty? || find_pieces?(:r).empty?
+    find_pieces(:b).empty? || find_pieces(:r).empty?
   end
   
   def in_board?(pos)
@@ -105,6 +117,5 @@ class Board
 end
 
 
-b = Board.new(true)
-print b
+
 
