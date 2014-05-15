@@ -62,8 +62,8 @@ class Pieces
   end
   
   def to_s
-    return color == :b ? "♛" : "♕" if king
-    color == :b ? "♟" : "♙"
+    return color == :b ? "♛" : "♛".colorize(:red) if king
+    color == :b ? "♟" : "♟".colorize(:red)
   end
   
 end

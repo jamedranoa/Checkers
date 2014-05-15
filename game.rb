@@ -1,6 +1,7 @@
 require "./board"
 require "./pieces"
 require './player'
+
 class Game
   def initialize(player1,player2)
     @players = [player1, player2]
@@ -16,8 +17,9 @@ class Game
   def play
     while !@board.over?
       
-      system "clear"
+      
       begin
+        system "clear"
         print @board
         puts "#{@players.first} is your turn!"
         turn(@players.first)
@@ -25,6 +27,7 @@ class Game
         p e.message
         p "Try again, press return"
         gets
+        retry
       end
       
       @players.rotate!

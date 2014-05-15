@@ -1,4 +1,5 @@
 require './pieces'
+require 'colorize'
 
 class InvalideMoveError< StandardError  
 end  
@@ -71,17 +72,17 @@ class Board
 
   def to_s
     str = ""
+    str << "   0  1  2  3  4  5  6  7 \n"
     7.downto(0) do |row|
+      str << "#{row} "
       8.times do |col|
-        if self[[col,row]]==nil
-          str << "[ ]"
-          next
-        end
-        str << "[#{@board[[col,row]]}]"
+        add = self[[col,row]].nil? ? "   " : " #{@board[[col,row]]} "
+        add = (row + col).odd? ? add.colorize(:background  => :light_black) : add
+        str << add 
       end
       str << " #{row} \n"
     end
-    str << " 0  1  2  3  4  5  6  7 \n "
+    str << "   0  1  2  3  4  5  6  7 \n "
     str
   end
     
